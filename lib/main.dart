@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('applaction'),
+          title: Text('主页'),
         ),
         body: Center(
           child: HomePage(),

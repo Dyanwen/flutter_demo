@@ -1,77 +1,42 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application/util/struct/artical_summary_struct.dart';
+import 'package:flutter_application/util/struct/user_info_struct.dart';
+import 'package:flutter_application/widgets/common/banner_info.dart';
+import 'package:flutter_application/widgets/home_page/artical_card.dart';
 
-import 'package:intl/intl.dart'; // 需要在 pubspec.yaml 增加该模块
-
-/// App 首页入口
+/// 首页列表信息
 ///
-/// 本模块函数，加载状态类组件 HomePageState
-/// [prefix]是显示在时间之前的一个字符串
+/// 展示banner和帖子信息
+class HomePage extends StatelessWidget {
+  /// banner 地址信息
+  final String bannerImage =
+      'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fa4.att.hudong.com%2F27%2F67%2F01300000921826141299672233506.jpg&refer=http%3A%2F%2Fa4.att.hudong.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1616308224&t=fba64f57ab892441c38ace3ecaed3c64';
 
-class HomePage extends StatefulWidget {
-  /// 当前时间显示的前缀信息
+  /// 帖子标题
+  final UserInfoStruct userInfo = UserInfoStruct('flutter',
+      'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fa0.att.hudong.com%2F30%2F29%2F01300000201438121627296084016.jpg&refer=http%3A%2F%2Fa0.att.hudong.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1616308224&t=22b43c58338025a1fec1c2541101d981');
 
-  final String prefix = '当前时间';
-
-  @override
-  createState() => HomePageState();
-}
-
-/// 首页有状态组件类
-///
-/// 主要是获取当前时间，并动态展示当前时间
-
-class HomePageState extends State<HomePage> {
-  /// 展示当前时间字符串
-
-  String currentTimeStr;
-
-  @override
-  void initState() {
-    super.initState();
-
-    this.currentTimeStr = getCurrentTime();
-
-    refreshTimeStr();
-  }
-
-  /// 更新当前时间字符串 [currentTimeStr]
-  ///
-  /// 每 500ms 更新一次，使用 Timer
-
-  void refreshTimeStr() {
-    const period = Duration(milliseconds: 500);
-
-    // 定时更新当前时间的 currentTimeStr 字符串
-
-    Timer.periodic(period, (timer) {
-      setState(() {
-        this.currentTimeStr = getCurrentTime();
-      });
-    });
-  }
-
-  /// 获取当前时间戳
-
-  ///
-
-  /// 返回一个字符串类型的前缀信息：时间戳
-
-  String getCurrentTime() {
-    DateTime now = DateTime.now();
-
-    var formatter = DateFormat('yy-MM-dd hh:mm:ss');
-
-    return formatter.format(now);
-  }
-
-  /// 有状态类返回组件信息
+  /// 帖子概要描述信息
+  final ArticleSummaryStruct articleInfo = ArticleSummaryStruct(
+      '你好，教个朋友',
+      '我是一个小可爱',
+      'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fa0.att.hudong.com%2F52%2F62%2F31300542679117141195629117826.jpg&refer=http%3A%2F%2Fa0.att.hudong.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1616308224&t=7a13be050ead8c4bcf52d454f3a42302',
+      20,
+      30);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[Text(widget.prefix), Text(this.currentTimeStr)],
+    return Container(
+      child: Column(
+        children: <Widget>[
+          BannerInfo(bannerImage: bannerImage),
+          ArticleCard(
+            userInfo: userInfo,
+            articleInfo: articleInfo,
+          ),
+        ],
+      ),
     );
   }
 }
